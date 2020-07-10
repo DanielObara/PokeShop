@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Navbar,
   NavDropdown,
@@ -10,8 +10,31 @@ import {
 } from 'react-bootstrap';
 
 import logo from './logo.svg';
+import api from '../../services/api';
 
-const Header = () => {
+interface ITypes {
+  name: string;
+}
+interface IResults {
+  results: Array<ITypes>;
+}
+
+const Header: React.FC = () => {
+  const [name, setName] = useState();
+  const [types, setTypes] = useState<IResults[]>([]);
+
+  useEffect(() => {
+    async function loadTypes(): Promise<void> {
+      const { data } = await api.get<IResults>('/type');
+      const { results } = data;
+      // console.log('Header:React.FC -> results', results);
+
+      setTypes([results]);
+    }
+
+    loadTypes();
+  }, []);
+
   return (
     <>
       <Navbar bg="light" expand="lg">
@@ -27,15 +50,12 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <NavDropdown title="Tipos" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
+              {!types.length &&
+                types.map(
+                  ({ name }): ITypes => (
+                    <NavDropdown.Item href="#">{type.name}</NavDropdown.Item>
+                  ),
+                )}
             </NavDropdown>
           </Nav>
           <Form inline>

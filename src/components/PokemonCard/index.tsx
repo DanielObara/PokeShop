@@ -1,21 +1,44 @@
-import React from 'react';
+/* eslint-disable camelcase */
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Card, Button } from 'react-bootstrap';
-import poke from '../../assets/001.png';
 
-const PokemonCard: React.FC = () => {
+interface IProps {
+  name: string;
+  url: string;
+}
+interface IPokemonDetail {
+  id: number;
+  sprites: {
+    front_default: string;
+  };
+}
+
+const PokemonCard: React.FC<IProps> = ({ name, url }: IProps) => {
+  const [pokeImg, setPokeImg] = useState<IPokemonDetail>();
+
+  useEffect(() => {
+    async function loadPokemonImg(address: string): Promise<void> {
+      const { data } = await axios.get<IPokemonDetail>(`${address}`);
+      const { id, sprites } = data;
+
+      setPokeImg({ id, sprites });
+    }
+
+    loadPokemonImg(url);
+  }, [url]);
+
   return (
     <>
-      <Card style={{ width: '10rem' }}>
-        <Card.Img variant="top" src={poke} />
-        <Card.Body>
-          <Card.Title>BURBA</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the cards content.
-          </Card.Text>
-          <Button variant="primary">Go somewhere</Button>
-        </Card.Body>
-      </Card>
+      {pokeImg && (
+        <Card style={{ width: '13rem' }}>
+          <Card.Img variant="top" src={pokeImg.sprites.front_default} />
+          <Card.Body>
+            <Card.Title>{`#${pokeImg.id}-${name}`}</Card.Title>
+            <Button variant="primary">Go somewhere</Button>
+          </Card.Body>
+        </Card>
+      )}
     </>
   );
 };

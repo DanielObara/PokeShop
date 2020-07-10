@@ -27,8 +27,10 @@
         "react-hooks",
         "@typescript-eslint",
         "prettier"
-    ],
-    "rules": {
+      ],
+      "rules": {
+      "camelcase": ["error", {"properties": "never"}],
+      "prettier/prettier": "error",
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
       "react/jsx-filename-extension": [
@@ -40,6 +42,7 @@
         }
       ],
       "import/prefer-default-export": "off",
+      "import/prop-types": "off",
       "import/extensions": [
         "error",
         "ignorePackages",
@@ -48,7 +51,12 @@
           "tsx": "never"
         }
       ],
-      "prettier/prettier": "error"
+      "@typescript-eslint/explicit-function-return-type":[
+        "error",
+        {
+          "allowExpressions": true
+        }
+      ]
     },
     "settings": {
       "import/resolver": {
