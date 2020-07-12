@@ -40,7 +40,7 @@ const Pokedex: React.FC = () => {
             <Row>
               {pokemons &&
                 pokemons.results.map(pokemon => (
-                  <Col md="3">
+                  <Col md="auto">
                     <PokemonCard name={pokemon.name} url={pokemon.url} />
                   </Col>
                 ))}

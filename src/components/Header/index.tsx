@@ -15,21 +15,17 @@ import api from '../../services/api';
 interface ITypes {
   name: string;
 }
-interface IResults {
-  results: Array<ITypes>;
-}
 
 const Header: React.FC = () => {
-  const [name, setName] = useState();
-  const [types, setTypes] = useState<IResults[]>([]);
+  // const [name, setName] = useState();
+  const [types, setTypes] = useState<ITypes[]>([]);
 
   useEffect(() => {
     async function loadTypes(): Promise<void> {
-      const { data } = await api.get<IResults>('/type');
+      const { data } = await api.get('/type');
       const { results } = data;
-      // console.log('Header:React.FC -> results', results);
 
-      setTypes([results]);
+      setTypes(results);
     }
 
     loadTypes();
@@ -50,12 +46,9 @@ const Header: React.FC = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <NavDropdown title="Tipos" id="basic-nav-dropdown">
-              {!types.length &&
-                types.map(
-                  ({ name }): ITypes => (
-                    <NavDropdown.Item href="#">{type.name}</NavDropdown.Item>
-                  ),
-                )}
+              {types.map(type => (
+                <NavDropdown.Item href="#">{type.name}</NavDropdown.Item>
+              ))}
             </NavDropdown>
           </Nav>
           <Form inline>
