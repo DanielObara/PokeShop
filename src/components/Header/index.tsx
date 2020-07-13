@@ -1,35 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import {
   Navbar,
-  NavDropdown,
   Form,
   FormControl,
   Button,
-  Nav,
   Image,
+  DropdownButton,
+  Dropdown,
 } from 'react-bootstrap';
 
 import logo from './logo.svg';
 import api from '../../services/api';
-
-interface ITypes {
-  name: string;
-}
+import { TypeButton } from '../TypesButton/styles';
+import TYPES_THEME from '../../utils/Types';
 
 const Header: React.FC = () => {
   // const [name, setName] = useState();
-  const [types, setTypes] = useState<ITypes[]>([]);
-
-  useEffect(() => {
-    async function loadTypes(): Promise<void> {
-      const { data } = await api.get('/type');
-      const { results } = data;
-
-      setTypes(results);
-    }
-
-    loadTypes();
-  }, []);
 
   return (
     <>
@@ -42,15 +28,23 @@ const Header: React.FC = () => {
             alt="teste"
           />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <NavDropdown title="Tipos" id="basic-nav-dropdown">
-              {types.map(type => (
-                <NavDropdown.Item href="#">{type.name}</NavDropdown.Item>
+          <DropdownButton
+            id="dropdown-button-drop"
+            drop="down"
+            variant="secondary"
+            title="Tipos"
+            className="mr-auto"
+          >
+            {TYPES_THEME.length > 0 &&
+              TYPES_THEME.map(curr => (
+                <Dropdown.Item>
+                  <TypeButton type={curr} key={curr.name}>
+                    {curr.name}
+                  </TypeButton>
+                </Dropdown.Item>
               ))}
-            </NavDropdown>
-          </Nav>
+          </DropdownButton>
           <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
             <Button variant="outline-success">Search</Button>

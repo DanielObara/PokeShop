@@ -35,7 +35,7 @@ const PokemonCard: React.FC<IProps> = ({ name, url }: IProps) => {
           <Card.Img variant="top" src={pokeImg.sprites.front_default} />
           <Card.Body>
             <Card.Title>{`#${pokeImg.id}-${name}`}</Card.Title>
-            <Button variant="primary">Go somewhere</Button>
+            <Button variant="primary">Comprar</Button>
           </Card.Body>
         </Card>
       )}
