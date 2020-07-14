@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 
 import api from '../../services/api';
@@ -42,9 +42,14 @@ const Pokedex: React.FC = () => {
     loadPokemons(type);
   }, [type]);
 
+  function handleTypesFilter(newValue: string): void {
+    setType(newValue);
+  }
+
   return (
     <>
-      <Header />
+      {/* not done */}
+      <Header onChange={handleTypesFilter} />
       <Container fluid>
         {!pokemons ? (
           <Row className="d-flex justify-content-center align-items-center">
@@ -61,7 +66,11 @@ const Pokedex: React.FC = () => {
                 {pokemons &&
                   pokemons.results.map(pokemon => (
                     <Col md="auto">
-                      <PokemonCard name={pokemon.name} url={pokemon.url} />
+                      <PokemonCard
+                        name={pokemon.name}
+                        url={pokemon.url}
+                        price={pokemon.price}
+                      />
                     </Col>
                   ))}
               </Row>

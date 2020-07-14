@@ -6,6 +6,7 @@ import { Card, Button } from 'react-bootstrap';
 interface IProps {
   name: string;
   url: string;
+  price: number;
 }
 interface IPokemonDetail {
   id: number;
@@ -14,7 +15,7 @@ interface IPokemonDetail {
   };
 }
 
-const PokemonCard: React.FC<IProps> = ({ name, url }: IProps) => {
+const PokemonCard: React.FC<IProps> = ({ name, url, price }: IProps) => {
   const [pokeImg, setPokeImg] = useState<IPokemonDetail>();
 
   useEffect(() => {
@@ -35,6 +36,12 @@ const PokemonCard: React.FC<IProps> = ({ name, url }: IProps) => {
           <Card.Img variant="top" src={pokeImg.sprites.front_default} />
           <Card.Body>
             <Card.Title>{`#${pokeImg.id}-${name}`}</Card.Title>
+            <span>
+              Preço: R$
+              {price}
+              ,00
+{' '}
+            </span>
             <Button variant="primary">Comprar</Button>
           </Card.Body>
         </Card>

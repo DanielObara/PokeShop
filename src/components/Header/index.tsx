@@ -12,11 +12,28 @@ import {
 import logo from './logo.svg';
 import api from '../../services/api';
 import { TypeButton } from '../TypesButton/styles';
-import TYPES_THEME from '../../utils/Types';
 
-const Header: React.FC = () => {
-  // const [name, setName] = useState();
+interface IType {
+  name: string;
+}
+const Header: React.FC = props => {
+  const [types, setTypes] = useState<IType[]>([]);
 
+  useEffect(() => {
+    async function loadTypes(): Promise<void> {
+      const { data } = await api.get('/type');
+      const { results } = data;
+
+      setTypes(results);
+    }
+
+    loadTypes();
+  }, []);
+
+  // not done
+  function handlePokemonFilter(event) {
+    props.handleTypesFilter(event.target.value);
+  }
   return (
     <>
       <Navbar bg="light" expand="lg">
@@ -36,10 +53,10 @@ const Header: React.FC = () => {
             title="Tipos"
             className="mr-auto"
           >
-            {TYPES_THEME.length > 0 &&
-              TYPES_THEME.map(curr => (
+            {types.length > 0 &&
+              types.map(curr => (
                 <Dropdown.Item>
-                  <TypeButton type={curr} key={curr.name}>
+                  <TypeButton type={curr.name} key={curr.name}>
                     {curr.name}
                   </TypeButton>
                 </Dropdown.Item>
