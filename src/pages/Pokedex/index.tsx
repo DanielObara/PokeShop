@@ -49,7 +49,7 @@ const Pokedex: React.FC = () => {
   return (
     <>
       {/* not done */}
-      <Header onChange={handleTypesFilter} />
+      <Header />
       <Container fluid>
         {!pokemons ? (
           <Row className="d-flex justify-content-center align-items-center">
@@ -61,11 +61,11 @@ const Pokedex: React.FC = () => {
           </Row>
         ) : (
           <Row className="d-flex">
-            <Col md="9" className="d-flex-wrap">
+            <Col md="9">
               <Row>
                 {pokemons &&
                   pokemons.results.map(pokemon => (
-                    <Col md="auto">
+                    <Col md="auto" className="mb-3">
                       <PokemonCard
                         name={pokemon.name}
                         url={pokemon.url}

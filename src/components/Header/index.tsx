@@ -31,9 +31,10 @@ const Header: React.FC = props => {
   }, []);
 
   // not done
-  function handlePokemonFilter(event) {
-    props.handleTypesFilter(event.target.value);
-  }
+  // function handlePokemonFilter(event: FormEvent<HTMLFormElement>): void {
+  //   event.preventDefault();
+  //   props.handleFilter(event.target.value);
+  // }
   return (
     <>
       <Navbar bg="light" expand="lg">
@@ -63,7 +64,12 @@ const Header: React.FC = props => {
               ))}
           </DropdownButton>
           <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+            <FormControl
+              type="text"
+              placeholder="Search"
+              // onChange={e => props.handleFilter(e.target.value)}
+              className="mr-sm-2"
+            />
             <Button variant="outline-success">Search</Button>
           </Form>
         </Navbar.Collapse>
