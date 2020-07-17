@@ -13,10 +13,4 @@ export const CardImageContainer = styled.div`
 export const CardImage = styled(Card.Img)`
   width: 100%;
   cursor: pointer;
-  &:hover {
-    animation: MoveUpDown 0.5s linear infinite;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-  }
 `;

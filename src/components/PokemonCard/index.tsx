@@ -1,14 +1,16 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, Button, Badge } from 'react-bootstrap';
 import { TypeButton } from '../TypesButton/styles';
-import { CardImage, CardImageContainer } from './styles';
+import { CardImageContainer } from './styles';
 
 interface IProps {
   name: string;
   url: string;
   price: number;
+  addToCart(pokemon: IPokemon): void;
 }
 interface IPokemonDetail {
   id: number;
@@ -17,14 +19,20 @@ interface IPokemonDetail {
   };
   types: Array<IType>;
 }
-
+interface IPokemon {
+  name: string;
+  url: string;
+  price: number;
+}
+type PropsFunction = () => void;
 interface IType {
   type: {
     name: string;
   };
 }
 
-const PokemonCard: React.FC<IProps> = ({ name, url, price }: IProps) => {
+const PokemonCard: React.FC<IProps> = props => {
+  const { name, url, price } = props;
   const [pokeDetails, setPokeDetails] = useState<IPokemonDetail>();
 
   function firstLetterUpperCase(): string {
@@ -45,10 +53,15 @@ const PokemonCard: React.FC<IProps> = ({ name, url, price }: IProps) => {
   return (
     <>
       {pokeDetails && (
-        <Card style={{ width: '12rem' }}>
+        <Card style={{ width: '12rem' }} className="mt-2">
           <CardImageContainer>
-            {/* <Card.Img variant="top" src={pokeDetails.sprites.front_default} /> */}
-            <CardImage variant="top" src={pokeDetails.sprites.front_default} />
+            <Card.Img
+              variant="top"
+              src={
+                pokeDetails.sprites.front_default ||
+                `https://api.adorable.io/avatars/285/${name}.png`
+              }
+            />
           </CardImageContainer>
           <Card.Body>
             <Badge variant="secondary">{`# ${pokeDetails.id}`}</Badge>
